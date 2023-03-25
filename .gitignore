@@ -1,6 +1,7 @@
 .vs
-bin/game.exe
-bin/game.exe.manifest
-bin/game.pdb
-bin/game.ilk
+bin/*
+!bin/res
+!bin/assimp-vc143-mt.dll
+!bin/glew32.dll
+!bin/SDL2.dll
 out

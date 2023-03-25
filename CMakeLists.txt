@@ -11,8 +11,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # Add include directory
 include_directories(${CMAKE_SOURCE_DIR}/thirdparty)
+
 # Add lib directory
 link_directories(${CMAKE_SOURCE_DIR}/lib/x64/windows)
 
 # Add game subdirectory
 add_subdirectory(${CMAKE_SOURCE_DIR}/game)
+
+# Add server subdirectory
+add_subdirectory(${CMAKE_SOURCE_DIR}/server)
