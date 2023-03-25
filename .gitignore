@@ -1,0 +1,6 @@
+.vs
+bin/game.exe
+bin/game.exe.manifest
+bin/game.pdb
+bin/game.ilk
+out
