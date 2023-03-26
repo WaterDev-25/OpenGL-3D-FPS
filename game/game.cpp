@@ -171,6 +171,11 @@ void CGame::Update(bool* isRunning)
     // Draw map
     this->m_pMap->Draw(this->m_pShader);
 
+    // Call player update function
+    this->m_pPlayer->Update(this->m_deltaTime);
+
+    this->m_pPlayer->RenderWeapon(this->m_pShader);
+
     // Draw cubemap
     this->m_pSkyboxShader->Use();
 
@@ -182,9 +187,6 @@ void CGame::Update(bool* isRunning)
 
     // Draw cubemap
     this->m_pCubeMap->Draw();
-
-    // Call player update function
-    this->m_pPlayer->Update(this->m_deltaTime);
 
     // Render debug message
     this->m_pDebug->Render();

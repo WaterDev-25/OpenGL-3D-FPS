@@ -12,6 +12,7 @@
 #include "glshader.hpp"
 #include "model.hpp"
 #include "debug.hpp"
+#include "weapon_glock.hpp"
 
 enum ECameraMovement
 {
@@ -34,6 +35,9 @@ public:
 	// Player update
 	void Update(float deltaTime);
 
+	// Render the current weapon
+	void RenderWeapon(CGLShader* shader);
+
 	// Setters
 	// Return the player position
 	glm::vec3 GetPosition();
@@ -47,7 +51,9 @@ private:
 
 	ICamera* m_pCamera;
 
-	// Camera options
+	IWeapon* m_pWeapon;
+
+	// Player options
 	GLfloat m_speed;
 	GLfloat m_mouseSensitivity;
 	GLfloat m_jumpForce;

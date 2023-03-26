@@ -20,6 +20,8 @@ CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics
 
 	this->m_pCamera->UpdateCameraVectors();
 
+	this->m_pWeapon = new CWeaponGlock();
+
 	// Debugs messages
 	this->m_pDebug->AddInfo("Velocity: " + std::to_string(this->m_aabb.velocity.x) + ", " + std::to_string(this->m_aabb.velocity.y) + ", " + std::to_string(this->m_aabb.velocity.z));
 	this->m_pDebug->AddInfo("Position: " + std::to_string(this->m_aabb.position.x) + ", " + std::to_string(this->m_aabb.position.y) + ", " + std::to_string(this->m_aabb.position.z));
@@ -33,6 +35,7 @@ CPlayer::~CPlayer()
 {
 	// RAII
 	delete this->m_pCamera;
+	delete this->m_pWeapon;
 	this->m_keys = nullptr;
 }
 
@@ -73,6 +76,14 @@ void CPlayer::Update(float deltaTime)
 	this->m_pDebug->EditInfo(0, "Velocity: " + std::to_string(this->m_aabb.velocity.x) + ", " + std::to_string(this->m_aabb.velocity.y) + ", " + std::to_string(this->m_aabb.velocity.z));
 	this->m_pDebug->EditInfo(1, "Position: " + std::to_string(this->m_aabb.position.x) + ", " + std::to_string(this->m_aabb.position.y) + ", " + std::to_string(this->m_aabb.position.z));
 	this->m_pDebug->EditInfo(2, "Last position: " + std::to_string(this->m_aabb.lastPosition.x) + ", " + std::to_string(this->m_aabb.lastPosition.y) + ", " + std::to_string(this->m_aabb.lastPosition.z));
+}
+
+// ------------------------------------------------------
+// Purpose: Render the current weapon
+// ------------------------------------------------------
+void CPlayer::RenderWeapon(CGLShader* shader)
+{
+	this->m_pWeapon->Draw(shader, this->m_pCamera);
 }
 
 // ------------------------------------------------------
