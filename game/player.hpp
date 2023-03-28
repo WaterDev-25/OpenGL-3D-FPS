@@ -13,6 +13,7 @@
 #include "model.hpp"
 #include "debug.hpp"
 #include "weapon_glock.hpp"
+#include "bullet.hpp"
 
 enum ECameraMovement
 {
@@ -27,7 +28,7 @@ class CPlayer
 {
 public:
 	// Constructor
-	CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics);
+	CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics, SDL_Event* event);
 
 	// Destructor
 	~CPlayer();
@@ -37,6 +38,12 @@ public:
 
 	// Render the current weapon
 	void RenderWeapon(CGLShader* shader);
+
+	// Weapon fire
+	void Fire();
+	
+	// Render bullets
+	void RenderBullets(CGLShader* shader, float deltaTime);
 
 	// Setters
 	// Return the player position
@@ -53,6 +60,8 @@ private:
 
 	IWeapon* m_pWeapon;
 
+	std::vector<CBullet*> m_bullets;
+
 	// Player options
 	GLfloat m_speed;
 	GLfloat m_mouseSensitivity;
@@ -64,10 +73,12 @@ private:
 	bool m_firstMouse;
 	bool m_isJumping;
 	bool m_isGrounded;
+	bool m_isFiring;
 
 	CDebug* m_pDebug;
 	CMap* m_pMap;
 	CPhysics* m_pPhysics;
+	SDL_Event* m_pEvent;
 
 	// Process input received from keyboard
 	void ProcessKeyboard(ECameraMovement direction, float deltaTime);

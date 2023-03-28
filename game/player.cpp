@@ -3,7 +3,7 @@
 // ------------------------------------------------------
 // Purpose: Constructor
 // ------------------------------------------------------
-CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics) :
+CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics, SDL_Event* event) :
 	m_aabb(SPlayer{ position, glm::vec3(0.0f), glm::vec3(0.0f, 0.6f, 0.0f), glm::vec3(1.0f), glm::vec3(0.0f) }),
 	m_speed(3.5f),
 	m_mouseSensitivity(0.1f),
@@ -12,9 +12,11 @@ CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics
 	m_firstMouse(true),
 	m_isJumping(false),
 	m_isGrounded(false),
+	m_isFiring(false),
 	m_pDebug(debug),
 	m_pMap(map),
-	m_pPhysics(physics)
+	m_pPhysics(physics),
+	m_pEvent(event)
 {
 	this->m_pCamera = new CFPSCamera(this->m_aabb.position + this->m_aabb.size, 75.0f);
 
@@ -58,6 +60,18 @@ void CPlayer::Update(float deltaTime)
 	if (this->m_keys[SDL_SCANCODE_SPACE] && !this->m_isJumping)
 		ProcessKeyboard(JUMP, deltaTime);
 
+	while (SDL_PollEvent(this->m_pEvent))
+	{
+		if (this->m_pEvent->type == SDL_MOUSEBUTTONDOWN)
+		{
+			if (this->m_pEvent->button.button == SDL_BUTTON_LEFT)
+			{
+				if (!this->m_isFiring)
+					this->Fire();
+			}
+		}
+	}
+
 	// Player mouse movement
 	this->HandleMouseMovement();
 
@@ -84,6 +98,25 @@ void CPlayer::Update(float deltaTime)
 void CPlayer::RenderWeapon(CGLShader* shader)
 {
 	this->m_pWeapon->Draw(shader, this->m_pCamera);
+}
+
+// ------------------------------------------------------
+// Purpose: Weapon fire
+// ------------------------------------------------------
+void CPlayer::Fire()
+{
+	this->m_isFiring = true;
+
+	if(this->m_isFiring)
+		this->m_bullets.push_back(new CBullet("res/models/guns/bullet/bullet.obj", this->m_pCamera->GetPosition(), 1.0f));
+
+	this->m_isFiring = false;
+}
+
+void CPlayer::RenderBullets(CGLShader* shader, float deltaTime)
+{
+	for (auto& bullet : this->m_bullets)
+		bullet->Render(shader, deltaTime);
 }
 
 // ------------------------------------------------------

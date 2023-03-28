@@ -82,7 +82,7 @@ CGame::CGame(SDL_Window* window) :
 
     this->m_pShadowMap = new CShadowMap(2048, 2048, this->m_lightPos);
 
-    this->m_pPlayer = new CPlayer(glm::vec3(0.0f, 10.0f, 0.0f), this->m_pDebug, this->m_pMap, this->m_pPhysics);
+    this->m_pPlayer = new CPlayer(glm::vec3(0.0f, 10.0f, 0.0f), this->m_pDebug, this->m_pMap, this->m_pPhysics, &this->m_event);
 
     // Shader configuration
     this->m_pShader->Use();
@@ -174,7 +174,11 @@ void CGame::Update(bool* isRunning)
     // Call player update function
     this->m_pPlayer->Update(this->m_deltaTime);
 
+    // Render current weapon
     this->m_pPlayer->RenderWeapon(this->m_pShader);
+
+    // Render bullets
+    this->m_pPlayer->RenderBullets(this->m_pShader, this->m_deltaTime);
 
     // Draw cubemap
     this->m_pSkyboxShader->Use();
