@@ -22,9 +22,15 @@ public:
 	// Get bullet position
 	glm::vec3 GetPosition();
 
+	// Get bullet speed
+	float GetSpeed();
+
 	// Setters
 	// Set bullet position
 	void SetPosition(glm::vec3 position);
+
+	// Set bullet speed
+	void SetSpeed(float speed);
 
 private:
 	CModel* m_pModel;

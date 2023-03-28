@@ -48,6 +48,19 @@ void CPlayer::Update(float deltaTime)
 {
 	this->m_pCamera->SetPosition(this->m_aabb.position + this->m_aabb.size);
 
+	while (SDL_PollEvent(this->m_pEvent))
+	{
+		if (this->m_pEvent->type == SDL_MOUSEBUTTONDOWN)
+		{
+			// Fire
+			if (this->m_pEvent->button.button == SDL_BUTTON_LEFT)
+			{
+				if (!this->m_isFiring)
+					this->Fire();
+			}
+		}
+	}
+
 	// Player movement
 	if (this->m_keys[SDL_SCANCODE_W])
 		ProcessKeyboard(FORWARD, deltaTime);
@@ -59,18 +72,6 @@ void CPlayer::Update(float deltaTime)
 		ProcessKeyboard(RIGHT, deltaTime);
 	if (this->m_keys[SDL_SCANCODE_SPACE] && !this->m_isJumping)
 		ProcessKeyboard(JUMP, deltaTime);
-
-	while (SDL_PollEvent(this->m_pEvent))
-	{
-		if (this->m_pEvent->type == SDL_MOUSEBUTTONDOWN)
-		{
-			if (this->m_pEvent->button.button == SDL_BUTTON_LEFT)
-			{
-				if (!this->m_isFiring)
-					this->Fire();
-			}
-		}
-	}
 
 	// Player mouse movement
 	this->HandleMouseMovement();

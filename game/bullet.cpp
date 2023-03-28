@@ -46,9 +46,25 @@ glm::vec3 CBullet::GetPosition()
 }
 
 // ------------------------------------------------------
+// Purpose: Get bullet speed
+// ------------------------------------------------------
+float CBullet::GetSpeed()
+{
+	return this->m_speed;
+}
+
+// ------------------------------------------------------
 // Purpose: Set bullet position
 // ------------------------------------------------------
 void CBullet::SetPosition(glm::vec3 position)
 {
 	this->m_position = position;
+}
+
+// ------------------------------------------------------
+// Purpose: Set bullet position
+// ------------------------------------------------------
+void CBullet::SetSpeed(float speed)
+{
+	this->m_speed = speed;
 }
