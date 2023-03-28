@@ -82,7 +82,7 @@ CGame::CGame(SDL_Window* window) :
 
     this->m_pShadowMap = new CShadowMap(2048, 2048, this->m_lightPos);
 
-    this->m_pPlayer = new CPlayer(glm::vec3(0.0f, 10.0f, 0.0f), this->m_pDebug, this->m_pMap, this->m_pPhysics, &this->m_event);
+    this->m_pPlayer = new CPlayer(glm::vec3(0.0f, 10.0f, 0.0f), this->m_pDebug, this->m_pMap, this->m_pPhysics);
 
     // Shader configuration
     this->m_pShader->Use();
@@ -126,8 +126,11 @@ void CGame::Update(bool* isRunning)
 	while (SDL_PollEvent(&this->m_event))
 	{
 		// Close window event
-		if (this->m_event.type == SDL_QUIT)
+        if (this->m_event.type == SDL_QUIT)
 			*isRunning = false;
+
+        // Player input event
+        this->m_pPlayer->InputEvent(&this->m_event);
 	}
 
     // Clear color

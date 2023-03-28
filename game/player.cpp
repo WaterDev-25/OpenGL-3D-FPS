@@ -3,7 +3,7 @@
 // ------------------------------------------------------
 // Purpose: Constructor
 // ------------------------------------------------------
-CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics, SDL_Event* event) :
+CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics) :
 	m_aabb(SPlayer{ position, glm::vec3(0.0f), glm::vec3(0.0f, 0.6f, 0.0f), glm::vec3(1.0f), glm::vec3(0.0f) }),
 	m_speed(3.5f),
 	m_mouseSensitivity(0.1f),
@@ -15,8 +15,7 @@ CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics
 	m_isFiring(false),
 	m_pDebug(debug),
 	m_pMap(map),
-	m_pPhysics(physics),
-	m_pEvent(event)
+	m_pPhysics(physics)
 {
 	this->m_pCamera = new CFPSCamera(this->m_aabb.position + this->m_aabb.size, 75.0f);
 
@@ -39,6 +38,9 @@ CPlayer::~CPlayer()
 	delete this->m_pCamera;
 	delete this->m_pWeapon;
 	this->m_keys = nullptr;
+
+	for (auto& bullet : this->m_bullets)
+		delete bullet;
 }
 
 // ------------------------------------------------------
@@ -47,19 +49,6 @@ CPlayer::~CPlayer()
 void CPlayer::Update(float deltaTime)
 {
 	this->m_pCamera->SetPosition(this->m_aabb.position + this->m_aabb.size);
-
-	while (SDL_PollEvent(this->m_pEvent))
-	{
-		if (this->m_pEvent->type == SDL_MOUSEBUTTONDOWN)
-		{
-			// Fire
-			if (this->m_pEvent->button.button == SDL_BUTTON_LEFT)
-			{
-				if (!this->m_isFiring)
-					this->Fire();
-			}
-		}
-	}
 
 	// Player movement
 	if (this->m_keys[SDL_SCANCODE_W])
@@ -91,6 +80,22 @@ void CPlayer::Update(float deltaTime)
 	this->m_pDebug->EditInfo(0, "Velocity: " + std::to_string(this->m_aabb.velocity.x) + ", " + std::to_string(this->m_aabb.velocity.y) + ", " + std::to_string(this->m_aabb.velocity.z));
 	this->m_pDebug->EditInfo(1, "Position: " + std::to_string(this->m_aabb.position.x) + ", " + std::to_string(this->m_aabb.position.y) + ", " + std::to_string(this->m_aabb.position.z));
 	this->m_pDebug->EditInfo(2, "Last position: " + std::to_string(this->m_aabb.lastPosition.x) + ", " + std::to_string(this->m_aabb.lastPosition.y) + ", " + std::to_string(this->m_aabb.lastPosition.z));
+}
+
+// ------------------------------------------------------
+// Purpose: Player input event
+// ------------------------------------------------------
+void CPlayer::InputEvent(SDL_Event* e)
+{
+	if (e->type == SDL_MOUSEBUTTONDOWN)
+	{
+		// Fire
+		if (e->button.button == SDL_BUTTON_LEFT)
+		{
+			if (!this->m_isFiring)
+				this->Fire();
+		}
+	}
 }
 
 // ------------------------------------------------------

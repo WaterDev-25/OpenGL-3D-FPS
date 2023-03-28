@@ -28,13 +28,16 @@ class CPlayer
 {
 public:
 	// Constructor
-	CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics, SDL_Event* event);
+	CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics);
 
 	// Destructor
 	~CPlayer();
 
 	// Player update
 	void Update(float deltaTime);
+
+	// Player input event
+	void InputEvent(SDL_Event* e);
 
 	// Render the current weapon
 	void RenderWeapon(CGLShader* shader);
@@ -78,7 +81,6 @@ private:
 	CDebug* m_pDebug;
 	CMap* m_pMap;
 	CPhysics* m_pPhysics;
-	SDL_Event* m_pEvent;
 
 	// Process input received from keyboard
 	void ProcessKeyboard(ECameraMovement direction, float deltaTime);
