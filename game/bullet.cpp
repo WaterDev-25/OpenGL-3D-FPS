@@ -5,7 +5,9 @@
 // ------------------------------------------------------
 CBullet::CBullet(std::string model, glm::vec3 position, float speed) :
 	m_position(position),
-	m_speed(speed)
+	m_velocity(glm::vec3(0.0f)),
+	m_speed(speed),
+	m_sphere(SSphere { position, 2.0f })
 {
 	// Init bullet model
 	this->m_pModel = new CModel(model);
@@ -27,7 +29,7 @@ void CBullet::Render(CGLShader* shader, float deltaTime)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 
-	this->m_position.x += this->m_speed * deltaTime;
+	this->m_position += this->m_velocity * deltaTime;
 
 	model = glm::translate(model, this->m_position);
 	model = glm::scale(model, glm::vec3(0.1f));

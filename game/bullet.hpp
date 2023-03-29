@@ -3,6 +3,7 @@
 
 #include "glshader.hpp"
 #include "model.hpp"
+#include "physics.hpp"
 
 #include <glm/glm.hpp>
 
@@ -35,7 +36,10 @@ public:
 private:
 	CModel* m_pModel;
 
+	SSphere m_sphere;
+
 	glm::vec3 m_position;
+	glm::vec3 m_velocity;
 
 	float m_speed;
 };

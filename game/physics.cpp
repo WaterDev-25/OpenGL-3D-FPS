@@ -84,3 +84,41 @@ SPlayerToBoxCollision CPhysics::AABBCollision(SPlayer& player, SAABB& box)
 
 	return collision;
 }
+
+// ------------------------------------------------------
+// Purpose: Detect Sphere collision on a point
+// ------------------------------------------------------
+SPointToSphereCollision CPhysics::SphereCollision(glm::vec3& position, SSphere& sphere)
+{
+	SPointToSphereCollision collision;
+
+	int d2 = (int)(position.x - sphere.position.x) * (int)(position.x - sphere.position.x) + (int)(position.x - sphere.position.x) * (int)(position.y - sphere.position.y) + (int)(position.z - sphere.position.z) * (int)(position.z - sphere.position.z);
+	if (d2 > sphere.radius * sphere.radius)
+		collision.collision = false;
+	else
+		collision.collision = true;
+
+	collision.position = position;
+	collision.sphere = sphere;
+
+	return collision;
+}
+
+// ------------------------------------------------------
+// Purpose: Detect Sphere collision
+// ------------------------------------------------------
+SSphereToSphereCollision CPhysics::SphereCollision(SSphere& sphere1, SSphere& sphere2)
+{
+	SSphereToSphereCollision collision;
+
+	int d2 = (int)(sphere1.position.x - sphere2.position.x) * (int)(sphere1.position.x - sphere2.position.x) + (int)(sphere1.position.x - sphere2.position.x) * (int)(sphere1.position.y - sphere2.position.y) + (int)(sphere1.position.z - sphere2.position.z) * (int)(sphere1.position.z - sphere2.position.z);
+	if (d2 > (sphere1.radius + sphere2.radius) * (sphere1.radius + sphere2.radius))
+		collision.collision = false;
+	else
+		collision.collision = true;
+
+	collision.sphere1 = sphere1;
+	collision.sphere2 = sphere2;
+
+	return collision;
+}

@@ -12,6 +12,13 @@ struct SAABB
 	glm::vec3 axis;
 };
 
+struct SSphere
+{
+	glm::vec3 position;
+
+	float radius;
+};
+
 struct SPlayer
 {
 	glm::vec3 position;
@@ -45,6 +52,22 @@ struct SPlayerToBoxCollision
 	bool collision;
 };
 
+struct SPointToSphereCollision
+{
+	glm::vec3 position;
+	SSphere sphere;
+
+	bool collision;
+};
+
+struct SSphereToSphereCollision
+{
+	SSphere sphere1;
+	SSphere sphere2;
+
+	bool collision;
+};
+
 class CPhysics
 {
 public:
@@ -62,6 +85,12 @@ public:
 
 	// Detect AABB collision between player and box
 	SPlayerToBoxCollision AABBCollision(SPlayer& player, SAABB& box);
+
+	// Detect Sphere collision on a point
+	SPointToSphereCollision SphereCollision(glm::vec3& position, SSphere& sphere);
+
+	// Detect Sphere collision
+	SSphereToSphereCollision SphereCollision(SSphere& sphere1, SSphere& sphere2);
 };
 
 #endif // PHYSICS_HPP
