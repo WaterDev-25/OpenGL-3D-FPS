@@ -3,8 +3,9 @@
 // ------------------------------------------------------
 // Purpose: Constructor
 // ------------------------------------------------------
-CPlayer::CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics) :
+CPlayer::CPlayer(glm::vec3 position, glm::vec3 gravity, CDebug* debug, CMap* map, CPhysics* physics) :
 	m_aabb(SPlayer{ position, glm::vec3(0.0f), glm::vec3(0.0f, 0.6f, 0.0f), glm::vec3(1.0f), glm::vec3(0.0f) }),
+	m_gravity(gravity),
 	m_speed(3.5f),
 	m_mouseSensitivity(0.1f),
 	m_jumpForce(5.0f),
@@ -66,7 +67,7 @@ void CPlayer::Update(float deltaTime)
 	this->HandleMouseMovement();
 
 	// Apply gravity
-	glm::vec3 gravity = glm::vec3(0.0f, -9.81f, 0.0f);
+	glm::vec3 gravity = this->m_gravity;
 	this->m_aabb.velocity += gravity * deltaTime;
 	this->m_aabb.position += this->m_aabb.velocity * deltaTime;
 
@@ -114,7 +115,7 @@ void CPlayer::Fire()
 	this->m_isFiring = true;
 
 	if(this->m_isFiring)
-		this->m_bullets.push_back(new CBullet("res/models/guns/bullet/bullet.obj", this->m_pCamera->GetPosition(), 1.0f));
+		this->m_bullets.push_back(new CBullet("res/models/guns/bullet/bullet.obj", this->m_pCamera->GetPosition(), 5.0f, this->m_pCamera->GetFront()));
 
 	this->m_isFiring = false;
 }

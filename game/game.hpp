@@ -45,6 +45,8 @@ private:
 
 	CMap* m_pMap;
 
+	glm::vec3 m_gravity;
+
 	CPlayer* m_pPlayer;
 
 	CCubeMap* m_pCubeMap;

@@ -28,7 +28,7 @@ class CPlayer
 {
 public:
 	// Constructor
-	CPlayer(glm::vec3 position, CDebug* debug, CMap* map, CPhysics* physics);
+	CPlayer(glm::vec3 position, glm::vec3 gravity, CDebug* debug, CMap* map, CPhysics* physics);
 
 	// Destructor
 	~CPlayer();
@@ -58,6 +58,8 @@ public:
 private:
 	// Player attributes
 	SPlayer m_aabb;
+
+	glm::vec3 m_gravity;
 
 	ICamera* m_pCamera;
 

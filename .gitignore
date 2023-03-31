@@ -1,7 +1,8 @@
 .vs
-bin/*
-!bin/res
-!bin/assimp-vc143-mt.dll
-!bin/glew32.dll
-!bin/SDL2.dll
+bin/Debug/*
+!bin/Debug/res
+!bin/Debug/assimp-vc143-mt.dll
+!bin/Debug/glew32.dll
+!bin/Debug/SDL2.dll
 out
+build
