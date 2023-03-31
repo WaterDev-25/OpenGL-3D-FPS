@@ -6,3 +6,4 @@ bin/Debug/*
 !bin/Debug/SDL2.dll
 out
 build
+.vscode
