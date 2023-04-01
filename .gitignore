@@ -1,9 +1,10 @@
 .vs
+.vscode
 bin/Debug/*
 !bin/Debug/res
+!bin/Debug/server
 !bin/Debug/assimp-vc143-mt.dll
 !bin/Debug/glew32.dll
 !bin/Debug/SDL2.dll
 out
 build
-.vscode

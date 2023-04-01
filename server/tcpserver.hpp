@@ -1,5 +1,5 @@
-#ifndef SERVER_HPP
-#define SERVER_HPP
+#ifndef TCPSERVER_HPP
+#define TCPSERVER_HPP
 
 #if defined(WIN32) && !defined(UNIX)
 /* Do windows stuff */
@@ -12,13 +12,16 @@
 /* Error, both can't be defined or undefined same time */
 #endif
 
-class CServer
+#include <iostream>
+
+class CTCPServer
 {
+public:
 	// Constructor
-	CServer();
+	CTCPServer(int port);
 
 	// Destructor
-	~CServer();
+	~CTCPServer();
 };
 
-#endif // SERVER_HPP
+#endif // TCPSERVER_HPP

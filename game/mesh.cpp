@@ -102,7 +102,7 @@ void CMesh::SetupMesh()
 	glEnableVertexAttribArray(4);
 	
 	// Ids
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(SVertex), (void*)offsetof(SVertex, boneIds));
+	glVertexAttribPointer(5, 4, GL_INT, GL_FALSE, sizeof(SVertex), (void*)offsetof(SVertex, boneIds));
 	glEnableVertexAttribArray(5);
 	
 	// Weights

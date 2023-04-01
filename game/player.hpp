@@ -76,6 +76,7 @@ private:
 	const uint8_t* m_keys;
 
 	bool m_firstMouse;
+	bool m_isGravity;
 	bool m_isJumping;
 	bool m_isGrounded;
 	bool m_isFiring;

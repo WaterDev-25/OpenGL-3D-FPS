@@ -11,6 +11,7 @@ CPlayer::CPlayer(glm::vec3 position, glm::vec3 gravity, CDebug* debug, CMap* map
 	m_jumpForce(5.0f),
 	m_keys(SDL_GetKeyboardState(NULL)),
 	m_firstMouse(true),
+	m_isGravity(false),
 	m_isJumping(false),
 	m_isGrounded(false),
 	m_isFiring(false),
@@ -67,9 +68,11 @@ void CPlayer::Update(float deltaTime)
 	this->HandleMouseMovement();
 
 	// Apply gravity
-	glm::vec3 gravity = this->m_gravity;
-	this->m_aabb.velocity += gravity * deltaTime;
-	this->m_aabb.position += this->m_aabb.velocity * deltaTime;
+	if(this->m_isGravity)
+	{
+		this->m_aabb.velocity += this->m_gravity * deltaTime;
+		this->m_aabb.position += this->m_aabb.velocity * deltaTime;
+	}
 
 	// Handle jump
 	this->HandleJump();
@@ -147,6 +150,8 @@ ICamera* CPlayer::GetCamera()
 // ------------------------------------------------------
 void CPlayer::ProcessKeyboard(ECameraMovement direction, float deltaTime)
 {
+	this->m_isGravity = true;
+
 	switch (direction)
 	{
 	case FORWARD:

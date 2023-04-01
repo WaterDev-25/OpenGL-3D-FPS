@@ -84,7 +84,7 @@ CGame::CGame(SDL_Window* window) :
 
     this->m_gravity = glm::vec3(0.0f, -9.81f, 0.0f);
 
-    this->m_pPlayer = new CPlayer(glm::vec3(0.0f, 10.0f, 0.0f), this->m_gravity, this->m_pDebug, this->m_pMap, this->m_pPhysics);
+    this->m_pPlayer = new CPlayer(glm::vec3(0.0f, 0.1f, 0.0f), this->m_gravity, this->m_pDebug, this->m_pMap, this->m_pPhysics);
 
     // Shader configuration
     this->m_pShader->Use();

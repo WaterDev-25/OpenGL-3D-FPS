@@ -1,17 +1,19 @@
-#include "server.hpp"
+#include "tcpserver.hpp"
 
 // ------------------------------------------------------
 // Purpose: Constructor
 // ------------------------------------------------------
-CServer::CServer()
+CTCPServer::CTCPServer(int port)
 {
+#if defined(WIN32) && !defined(UNIX)
 	// --
+#endif
 }
 
 // ------------------------------------------------------
 // Purpose: Destructor
 // ------------------------------------------------------
-CServer::~CServer()
+CTCPServer::~CTCPServer()
 {
 	// RAII
 	// --
